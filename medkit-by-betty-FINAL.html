@@ -1,0 +1,798 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>MedKit by Betty – Everything Healthcare, We've Got You</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400&family=DM+Sans:wght@300;400;500;600&family=Dancing+Script:wght@700&display=swap" rel="stylesheet"/>
+<style>
+  :root {
+    --plum: #5B1F6A;
+    --plum-light: #7B3A8E;
+    --rose: #C2548A;
+    --rose-light: #E888B4;
+    --cream: #FDF8FC;
+    --white: #ffffff;
+    --gray: #6B6B7B;
+    --dark: #1A0A21;
+    --gold: #D4A847;
+    --border: rgba(91,31,106,0.12);
+  }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--cream);
+    color: var(--dark);
+    overflow-x: hidden;
+  }
+
+  /* ── NAV ── */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 18px 48px;
+    background: rgba(253,248,252,0.92);
+    backdrop-filter: blur(14px);
+    border-bottom: 1px solid var(--border);
+    transition: box-shadow .3s;
+  }
+  nav.scrolled { box-shadow: 0 4px 32px rgba(91,31,106,.12); }
+  .nav-logo {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.6rem; font-weight: 700;
+    color: var(--plum); letter-spacing: .01em;
+  }
+  .nav-logo span { color: var(--rose); font-style: italic; }
+  .nav-links { display: flex; gap: 36px; list-style: none; }
+  .nav-links a {
+    font-size: .85rem; font-weight: 500; letter-spacing: .06em;
+    text-transform: uppercase; color: var(--gray); text-decoration: none;
+    transition: color .2s;
+  }
+  .nav-links a:hover { color: var(--plum); }
+  .nav-cta {
+    background: var(--plum); color: #fff;
+    padding: 11px 28px; border-radius: 100px;
+    font-size: .82rem; font-weight: 600; letter-spacing: .05em;
+    text-transform: uppercase; text-decoration: none;
+    transition: background .2s, transform .2s;
+  }
+  .nav-cta:hover { background: var(--plum-light); transform: translateY(-1px); }
+  .hamburger { display: none; cursor: pointer; flex-direction: column; gap: 5px; }
+  .hamburger span { width: 24px; height: 2px; background: var(--plum); border-radius: 2px; transition: .3s; }
+
+  /* ── HERO ── */
+  #home {
+    min-height: 100vh;
+    display: grid; grid-template-columns: 1fr 1fr;
+    align-items: center;
+    padding: 120px 72px 80px;
+    position: relative; overflow: hidden;
+  }
+  .hero-bg {
+    position: absolute; inset: 0; z-index: 0;
+    background:
+      radial-gradient(ellipse 70% 70% at 80% 20%, rgba(194,84,138,.08) 0%, transparent 60%),
+      radial-gradient(ellipse 60% 80% at 10% 80%, rgba(91,31,106,.07) 0%, transparent 60%),
+      var(--cream);
+  }
+  .hero-orb {
+    position: absolute; border-radius: 50%;
+    background: radial-gradient(circle, rgba(194,84,138,.15), transparent 70%);
+  }
+  .hero-orb.a { width: 480px; height: 480px; top: -80px; right: -100px; }
+  .hero-orb.b { width: 300px; height: 300px; bottom: 60px; left: 30px; }
+  .hero-text { position: relative; z-index: 1; }
+  .hero-badge {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: rgba(91,31,106,.08); border: 1px solid rgba(91,31,106,.18);
+    padding: 7px 18px; border-radius: 100px; margin-bottom: 28px;
+    font-size: .78rem; font-weight: 600; letter-spacing: .08em;
+    color: var(--plum); text-transform: uppercase;
+  }
+  .hero-badge::before { content: '♥'; color: var(--rose); }
+  h1 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(2.8rem, 5vw, 4.2rem);
+    line-height: 1.08; font-weight: 700; color: var(--plum);
+    margin-bottom: 10px;
+  }
+  h1 em { color: var(--rose); font-style: italic; }
+  .hero-tagline {
+    font-size: 1.05rem; color: var(--gray); font-weight: 300;
+    line-height: 1.7; margin: 24px 0 42px; max-width: 440px;
+  }
+  .hero-tagline strong { color: var(--plum); font-weight: 600; }
+  .hero-actions { display: flex; gap: 16px; flex-wrap: wrap; }
+  .btn-primary {
+    background: linear-gradient(135deg, var(--plum), var(--plum-light));
+    color: #fff; padding: 15px 36px; border-radius: 100px;
+    font-size: .9rem; font-weight: 600; text-decoration: none;
+    box-shadow: 0 8px 28px rgba(91,31,106,.3);
+    transition: transform .2s, box-shadow .2s;
+  }
+  .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 14px 36px rgba(91,31,106,.35); }
+  .btn-secondary {
+    background: transparent; color: var(--plum);
+    border: 1.5px solid var(--plum);
+    padding: 14px 32px; border-radius: 100px;
+    font-size: .9rem; font-weight: 600; text-decoration: none;
+    transition: background .2s, color .2s;
+  }
+  .btn-secondary:hover { background: var(--plum); color: #fff; }
+  .hero-stats {
+    display: flex; gap: 40px; margin-top: 56px;
+    padding-top: 40px; border-top: 1px solid var(--border);
+  }
+  .stat-num {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 2.1rem; font-weight: 700; color: var(--plum);
+  }
+  .stat-label { font-size: .78rem; color: var(--gray); text-transform: uppercase; letter-spacing: .07em; margin-top: 2px; }
+  .hero-visual {
+    position: relative; z-index: 1;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .hero-card {
+    background: #fff; border-radius: 28px;
+    padding: 48px 42px; text-align: center;
+    box-shadow: 0 24px 80px rgba(91,31,106,.14), 0 4px 16px rgba(91,31,106,.08);
+    max-width: 380px; width: 100%;
+    animation: float 5s ease-in-out infinite;
+  }
+  @keyframes float { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-12px)} }
+  .hero-card-icon { font-size: 3.5rem; margin-bottom: 20px; }
+  .hero-card h3 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.5rem; color: var(--plum); margin-bottom: 12px;
+  }
+  .hero-card p { font-size: .9rem; color: var(--gray); line-height: 1.6; }
+  .pill-tags { display: flex; flex-wrap: wrap; gap: 8px; justify-content: center; margin-top: 24px; }
+  .pill {
+    background: rgba(91,31,106,.07); color: var(--plum);
+    padding: 6px 14px; border-radius: 100px;
+    font-size: .75rem; font-weight: 600;
+  }
+
+  /* ── SECTIONS ── */
+  section { padding: 100px 72px; }
+  .section-label {
+    display: inline-block; font-size: .75rem; font-weight: 700;
+    letter-spacing: .12em; text-transform: uppercase; color: var(--rose);
+    margin-bottom: 14px;
+  }
+  h2 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(2rem, 4vw, 3rem); font-weight: 700;
+    color: var(--plum); line-height: 1.15; margin-bottom: 18px;
+  }
+  h2 em { color: var(--rose); font-style: italic; }
+  .section-sub { font-size: 1rem; color: var(--gray); line-height: 1.7; max-width: 520px; }
+  .center { text-align: center; }
+  .center .section-sub { margin: 0 auto; }
+
+  /* ── SERVICES ── */
+  #services { background: var(--white); }
+  .services-grid {
+    display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 24px; margin-top: 60px;
+  }
+  .service-card {
+    background: var(--cream); border: 1px solid var(--border);
+    border-radius: 20px; padding: 32px 28px;
+    transition: transform .25s, box-shadow .25s, background .25s;
+    cursor: default;
+  }
+  .service-card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 20px 56px rgba(91,31,106,.12);
+    background: #fff;
+  }
+  .service-icon {
+    width: 52px; height: 52px; border-radius: 14px;
+    background: linear-gradient(135deg, var(--plum), var(--rose));
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.4rem; margin-bottom: 20px;
+    box-shadow: 0 6px 20px rgba(91,31,106,.22);
+  }
+  .service-card h3 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.2rem; font-weight: 700; color: var(--plum); margin-bottom: 10px;
+  }
+  .service-card p { font-size: .88rem; color: var(--gray); line-height: 1.65; }
+
+  /* ── WHY ── */
+  #why { background: var(--plum); }
+  #why h2, #why .section-label { color: #fff; }
+  #why em { color: var(--rose-light) !important; }
+  #why .section-sub { color: rgba(255,255,255,.65); }
+  .why-grid {
+    display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 24px; margin-top: 60px;
+  }
+  .why-card {
+    background: rgba(255,255,255,.08); border: 1px solid rgba(255,255,255,.12);
+    border-radius: 20px; padding: 32px 24px; text-align: center;
+    transition: background .25s, transform .25s;
+  }
+  .why-card:hover { background: rgba(255,255,255,.13); transform: translateY(-4px); }
+  .why-icon { font-size: 2.2rem; margin-bottom: 16px; }
+  .why-card h4 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.05rem; color: #fff; font-weight: 700; margin-bottom: 8px;
+  }
+  .why-card p { font-size: .82rem; color: rgba(255,255,255,.6); line-height: 1.6; }
+
+  /* ── SHOP ── */
+  #shop {}
+  .shop-header { display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 48px; flex-wrap: wrap; gap: 20px; }
+  .products-grid {
+    display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+    gap: 24px;
+  }
+  .product-card {
+    background: #fff; border: 1px solid var(--border);
+    border-radius: 20px; overflow: hidden;
+    transition: transform .25s, box-shadow .25s;
+  }
+  .product-card:hover { transform: translateY(-5px); box-shadow: 0 16px 48px rgba(91,31,106,.12); }
+  .product-img {
+    background: linear-gradient(135deg, rgba(91,31,106,.08), rgba(194,84,138,.1));
+    height: 180px; display: flex; align-items: center; justify-content: center;
+    font-size: 4rem;
+  }
+  .product-info { padding: 22px 22px 26px; }
+  .product-info h4 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.1rem; font-weight: 700; color: var(--plum); margin-bottom: 6px;
+  }
+  .product-info p { font-size: .82rem; color: var(--gray); line-height: 1.5; margin-bottom: 16px; }
+  .product-footer { display: flex; justify-content: space-between; align-items: center; }
+  .price { font-weight: 700; font-size: 1rem; color: var(--plum); }
+  .add-btn {
+    background: var(--plum); color: #fff;
+    border: none; padding: 9px 20px; border-radius: 100px;
+    font-size: .8rem; font-weight: 600; cursor: pointer;
+    transition: background .2s;
+  }
+  .add-btn:hover { background: var(--plum-light); }
+
+  /* ── BOOKING ── */
+  #booking { background: var(--white); }
+  .booking-wrap {
+    display: grid; grid-template-columns: 1fr 1.4fr;
+    gap: 60px; margin-top: 60px; align-items: start;
+  }
+  .booking-info h3 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.6rem; color: var(--plum); margin-bottom: 16px;
+  }
+  .booking-info p { font-size: .92rem; color: var(--gray); line-height: 1.75; margin-bottom: 28px; }
+  .contact-item {
+    display: flex; align-items: center; gap: 12px;
+    margin-bottom: 14px;
+  }
+  .contact-icon {
+    width: 40px; height: 40px; border-radius: 12px;
+    background: rgba(91,31,106,.08); display: flex; align-items: center; justify-content: center;
+    font-size: 1rem; flex-shrink: 0;
+  }
+  .contact-item span { font-size: .9rem; color: var(--dark); font-weight: 500; }
+  .form-box {
+    background: var(--cream); border: 1px solid var(--border);
+    border-radius: 24px; padding: 44px 40px;
+  }
+  .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  .form-group { margin-bottom: 20px; }
+  .form-group label {
+    display: block; font-size: .78rem; font-weight: 600; letter-spacing: .06em;
+    text-transform: uppercase; color: var(--plum); margin-bottom: 8px;
+  }
+  .form-group input, .form-group select, .form-group textarea {
+    width: 100%; padding: 13px 18px;
+    background: #fff; border: 1.5px solid var(--border);
+    border-radius: 12px; font-family: 'DM Sans', sans-serif;
+    font-size: .9rem; color: var(--dark); outline: none;
+    transition: border-color .2s, box-shadow .2s;
+  }
+  .form-group input:focus, .form-group select:focus, .form-group textarea:focus {
+    border-color: var(--rose); box-shadow: 0 0 0 3px rgba(194,84,138,.1);
+  }
+  .form-group textarea { resize: vertical; min-height: 110px; }
+  .submit-btn {
+    width: 100%; background: linear-gradient(135deg, var(--plum), var(--plum-light));
+    color: #fff; border: none; padding: 16px;
+    border-radius: 100px; font-size: .95rem; font-weight: 600;
+    cursor: pointer; font-family: 'DM Sans', sans-serif;
+    box-shadow: 0 8px 28px rgba(91,31,106,.3);
+    transition: transform .2s, box-shadow .2s;
+  }
+  .submit-btn:hover { transform: translateY(-2px); box-shadow: 0 14px 36px rgba(91,31,106,.35); }
+  .success-msg {
+    display: none; text-align: center; padding: 20px;
+    background: rgba(91,31,106,.08); border-radius: 12px;
+    color: var(--plum); font-weight: 600; margin-top: 16px;
+  }
+
+  /* ── FOOTER ── */
+  footer {
+    background: var(--dark); color: rgba(255,255,255,.6);
+    padding: 60px 72px 40px;
+  }
+  .footer-top {
+    display: grid; grid-template-columns: 1.5fr 1fr 1fr;
+    gap: 40px; padding-bottom: 48px;
+    border-bottom: 1px solid rgba(255,255,255,.1);
+  }
+  .footer-logo {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.8rem; font-weight: 700; color: #fff; margin-bottom: 14px;
+  }
+  .footer-logo span { color: var(--rose-light); font-style: italic; }
+  .footer-tagline {
+    font-family: 'Dancing Script', cursive;
+    font-size: 1rem; color: var(--rose-light); margin-top: 8px;
+  }
+  footer p { font-size: .88rem; line-height: 1.7; margin-top: 14px; max-width: 280px; }
+  footer h5 {
+    color: #fff; font-size: .82rem; font-weight: 700;
+    letter-spacing: .08em; text-transform: uppercase; margin-bottom: 20px;
+  }
+  footer ul { list-style: none; }
+  footer ul li { margin-bottom: 10px; }
+  footer ul a { color: rgba(255,255,255,.55); text-decoration: none; font-size: .88rem; transition: color .2s; }
+  footer ul a:hover { color: var(--rose-light); }
+  .footer-bottom {
+    display: flex; justify-content: space-between; align-items: center;
+    padding-top: 32px; flex-wrap: wrap; gap: 12px;
+  }
+  .footer-bottom p { font-size: .8rem; margin: 0; max-width: none; }
+  .footer-bottom .love { color: var(--rose-light); }
+
+  /* ── MOBILE ── */
+  @media (max-width: 900px) {
+    nav { padding: 16px 24px; }
+    .nav-links, .nav-cta { display: none; }
+    .hamburger { display: flex; }
+    section { padding: 70px 24px; }
+    #home { grid-template-columns: 1fr; padding: 110px 24px 60px; gap: 40px; }
+    .hero-visual { order: -1; }
+    .hero-card { padding: 32px 28px; }
+    .booking-wrap { grid-template-columns: 1fr; }
+    .form-row { grid-template-columns: 1fr; }
+    .footer-top { grid-template-columns: 1fr; }
+    footer { padding: 50px 24px 32px; }
+    .footer-bottom { flex-direction: column; text-align: center; }
+    .hero-stats { gap: 24px; }
+    .shop-header { flex-direction: column; align-items: flex-start; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav id="navbar">
+  <div class="nav-logo">Med<span>Kit</span> by Betty</div>
+  <ul class="nav-links">
+    <li><a href="#home">Home</a></li>
+    <li><a href="#services">Services</a></li>
+    <li><a href="#shop">Shop</a></li>
+    <li><a href="#booking">Book Now</a></li>
+    <li><a href="#booking">Contact</a></li>
+  </ul>
+  <a href="#booking" class="nav-cta">Book Appointment</a>
+  <div class="hamburger" onclick="toggleMenu()">
+    <span></span><span></span><span></span>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section id="home">
+  <div class="hero-bg"></div>
+  <div class="hero-orb a"></div>
+  <div class="hero-orb b"></div>
+  <div class="hero-text">
+    <div class="hero-badge">Medical · Dental · Home Nurse</div>
+    <h1>Everything Healthcare,<br><em>We've Got You.</em></h1>
+    <p class="hero-tagline">
+      Professional medical care <strong>delivered to your doorstep.</strong><br>
+      Post-op care, wound dressing, IV therapy & more —<br>all in the comfort of your own home.
+    </p>
+    <div class="hero-actions">
+      <a href="#booking" class="btn-primary">📅 Book a Visit</a>
+      <a href="#services" class="btn-secondary">Our Services</a>
+    </div>
+    <div class="hero-stats">
+      <div>
+        <div class="stat-num">8+</div>
+        <div class="stat-label">Services Offered</div>
+      </div>
+      <div>
+        <div class="stat-num">100%</div>
+        <div class="stat-label">Home-Based Care</div>
+      </div>
+      <div>
+        <div class="stat-num">24/7</div>
+        <div class="stat-label">Support Available</div>
+      </div>
+    </div>
+  </div>
+  <div class="hero-visual">
+    <div class="hero-card">
+      <div class="hero-card-icon">🏥</div>
+      <h3>Care Comes to You</h3>
+      <p>We bring qualified medical professionals right to your home so you can heal in comfort and peace.</p>
+      <div class="pill-tags">
+        <span class="pill">Licensed</span>
+        <span class="pill">Vetted</span>
+        <span class="pill">Insured</span>
+        <span class="pill">Nationwide</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SERVICES -->
+<section id="services">
+  <div class="center">
+    <span class="section-label">What We Offer</span>
+    <h2>Our <em>Healthcare</em> Services</h2>
+    <p class="section-sub">From post-operative care to chronic illness management, our certified professionals bring clinical-grade care into your home.</p>
+  </div>
+  <div class="services-grid">
+    <div class="service-card">
+      <div class="service-icon">🛏️</div>
+      <h3>Post-Operative Care</h3>
+      <p>Expert care and monitoring after surgery in the comfort of your home for a smooth, safe recovery.</p>
+    </div>
+    <div class="service-card">
+      <div class="service-icon">🩹</div>
+      <h3>Wound Care & Dressing</h3>
+      <p>Professional wound assessment, cleaning, and dressing changes using sterile clinical techniques.</p>
+    </div>
+    <div class="service-card">
+      <div class="service-icon">💊</div>
+      <h3>Medication Administration</h3>
+      <p>Accurate, timely administration and monitoring of prescribed medications by trained nurses.</p>
+    </div>
+    <div class="service-card">
+      <div class="service-icon">💉</div>
+      <h3>IV Therapy & Injections</h3>
+      <p>Intravenous therapy, drips, and injections administered safely at home by certified professionals.</p>
+    </div>
+    <div class="service-card">
+      <div class="service-icon">🔬</div>
+      <h3>Diagnostic Testing & Sample Collection</h3>
+      <p>Home-based lab sample collection, testing, and result coordination with your physician.</p>
+    </div>
+    <div class="service-card">
+      <div class="service-icon">🤒</div>
+      <h3>Acute Illness Management</h3>
+      <p>Prompt assessment and nursing care for fever, infections, dehydration, and other acute conditions.</p>
+    </div>
+    <div class="service-card">
+      <div class="service-icon">🏨</div>
+      <h3>Hospital Companion Services</h3>
+      <p>A dedicated companion to support and advocate for patients during hospital stays and procedures.</p>
+    </div>
+    <div class="service-card">
+      <div class="service-icon">🏠</div>
+      <h3>Home Nursing Care</h3>
+      <p>Ongoing professional nursing care and support in the comfort and privacy of your own home.</p>
+    </div>
+  </div>
+</section>
+
+<!-- WHY CHOOSE US -->
+<section id="why">
+  <div class="center">
+    <span class="section-label" style="color:rgba(255,255,255,.6)">Our Promise</span>
+    <h2>Why Choose <em>MedKit by Betty?</em></h2>
+    <p class="section-sub">Quality you can see. Care you can trust.</p>
+  </div>
+  <div class="why-grid">
+    <div class="why-card">
+      <div class="why-icon">✅</div>
+      <h4>Licensed & Vetted Professionals</h4>
+      <p>Every care provider is fully licensed, background-checked, and professionally trained.</p>
+    </div>
+    <div class="why-card">
+      <div class="why-icon">📋</div>
+      <h4>Personalized Care Plans</h4>
+      <p>We design care around your specific needs, schedule, and health goals.</p>
+    </div>
+    <div class="why-card">
+      <div class="why-icon">🏡</div>
+      <h4>Home-Based Excellence</h4>
+      <p>Clinical-grade care delivered with the warmth and comfort of home.</p>
+    </div>
+    <div class="why-card">
+      <div class="why-icon">🔒</div>
+      <h4>Privacy & Safety Assured</h4>
+      <p>Your medical information and home environment are always treated with full discretion.</p>
+    </div>
+    <div class="why-card">
+      <div class="why-icon">💝</div>
+      <h4>Compassionate & Respectful</h4>
+      <p>We treat every patient with dignity, empathy, and genuine compassion.</p>
+    </div>
+  </div>
+</section>
+
+<!-- SHOP -->
+<section id="shop">
+  <div class="shop-header">
+    <div>
+      <span class="section-label">Medical Supplies</span>
+      <h2>Our <em>Care Shop</em></h2>
+      <p class="section-sub">Quality medical supplies delivered to your door. Fast, safe, and reliable nationwide.</p>
+    </div>
+    <a href="#booking" class="btn-primary" style="white-space:nowrap">🚚 Order Now</a>
+  </div>
+  <div class="products-grid">
+    <div class="product-card">
+      <div class="product-img">🧤</div>
+      <div class="product-info">
+        <h4>Nitrile Examination Gloves</h4>
+        <p>Powder-free, latex-free. Box of 100. Available in S, M, L, XL.</p>
+        <div class="product-footer">
+          <span class="price">₦ 4,500</span>
+          <button class="add-btn" onclick="addToCart('Nitrile Examination Gloves', '₦4,500')">Order via WhatsApp</button>
+        </div>
+      </div>
+    </div>
+    <div class="product-card">
+      <div class="product-img">🧴</div>
+      <div class="product-info">
+        <h4>Hand Sanitizer (500ml)</h4>
+        <p>Hospital-grade 70% alcohol hand sanitizer for daily protection.</p>
+        <div class="product-footer">
+          <span class="price">₦ 2,800</span>
+          <button class="add-btn" onclick="addToCart('Hand Sanitizer (500ml)', '₦2,800')">Order via WhatsApp</button>
+        </div>
+      </div>
+    </div>
+    <div class="product-card">
+      <div class="product-img">🩺</div>
+      <div class="product-info">
+        <h4>MedKit Home Care Kit</h4>
+        <p>Everything you need for basic home care. Branded MedKit by Betty.</p>
+        <div class="product-footer">
+          <span class="price">₦ 18,000</span>
+          <button class="add-btn" onclick="addToCart('MedKit Home Care Kit', '₦18,000')">Order via WhatsApp</button>
+        </div>
+      </div>
+    </div>
+    <div class="product-card">
+      <div class="product-img">🩹</div>
+      <div class="product-info">
+        <h4>Wound Dressing Pack</h4>
+        <p>Sterile wound dressing set with gauze, plasters, and antiseptic.</p>
+        <div class="product-footer">
+          <span class="price">₦ 3,200</span>
+          <button class="add-btn" onclick="addToCart('Wound Dressing Pack', '₦3,200')">Order via WhatsApp</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- WhatsApp Order Toast -->
+  <div id="cart-toast" style="display:none;position:fixed;bottom:32px;right:32px;background:var(--plum);color:#fff;padding:16px 28px;border-radius:20px;font-weight:600;font-size:.9rem;box-shadow:0 8px 28px rgba(91,31,106,.4);z-index:999;max-width:320px;line-height:1.5;">
+    🛒 <span id="toast-product"></span><br>
+    <a id="toast-whatsapp" href="#" target="_blank" style="color:#25D366;text-decoration:none;font-size:.85rem;">👉 Tap here to order via WhatsApp</a>
+  </div>
+</section>
+
+<!-- BOOKING -->
+<section id="booking">
+  <span class="section-label">Schedule a Visit</span>
+  <h2>Book Your <em>Home Care</em> Appointment</h2>
+  <div class="booking-wrap">
+    <div class="booking-info">
+      <h3>We Come to You — So You Can Heal at Home.</h3>
+      <p>Fill out the form and our team will confirm your appointment within 24 hours. We offer nationwide delivery and home visits across Nigeria.</p>
+      <div class="contact-item">
+        <div class="contact-icon">📱</div>
+        <span>08162121821 (WhatsApp & Calls)</span>
+      </div>
+      <div class="contact-item">
+        <div class="contact-icon">📸</div>
+        <span>@medkit_by_betty</span>
+      </div>
+      <div class="contact-item">
+        <div class="contact-icon">✉️</div>
+        <span>medkitbybetty@gmail.com</span>
+      </div>
+      <div class="contact-item">
+        <div class="contact-icon">🚚</div>
+        <span>Nationwide Delivery Available</span>
+      </div>
+      <div style="margin-top:32px;padding:24px;background:rgba(91,31,106,.06);border-radius:16px;border:1px solid var(--border);">
+        <p style="font-family:'Dancing Script',cursive;font-size:1.3rem;color:var(--plum);font-weight:700;line-height:1.4;">
+          "Your Health. Our Passion.<br>Complete Care, Every Time." ♥
+        </p>
+      </div>
+    </div>
+    <div class="form-box">
+      <!-- ✅ FORMSPREE FORM — replace YOUR_FORM_ID with your Formspree ID -->
+      <form id="booking-form" action="https://formspree.io/f/xvzyqoyr" method="POST">
+        <div class="form-row">
+          <div class="form-group">
+            <label>First Name</label>
+            <input type="text" name="First Name" placeholder="e.g. Amaka" required/>
+          </div>
+          <div class="form-group">
+            <label>Last Name</label>
+            <input type="text" name="Last Name" placeholder="e.g. Okafor" required/>
+          </div>
+        </div>
+        <div class="form-group">
+          <label>Phone Number</label>
+          <input type="tel" name="Phone Number" placeholder="e.g. 0812 345 6789" required/>
+        </div>
+        <div class="form-group">
+          <label>Email Address</label>
+          <input type="email" name="Email" placeholder="your@email.com"/>
+        </div>
+        <div class="form-group">
+          <label>Service Needed</label>
+          <select name="Service" required>
+            <option value="">-- Select a service --</option>
+            <option>Post-Operative Care</option>
+            <option>Wound Care & Dressing</option>
+            <option>Medication Administration</option>
+            <option>IV Therapy & Injections</option>
+            <option>Diagnostic Testing & Sample Collection</option>
+            <option>Acute Illness Management</option>
+            <option>Hospital Companion Services</option>
+            <option>Home Nursing Care</option>
+            <option>Medical Supplies Order</option>
+          </select>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label>Preferred Date</label>
+            <input type="date" name="Preferred Date"/>
+          </div>
+          <div class="form-group">
+            <label>Preferred Time</label>
+            <input type="time" name="Preferred Time"/>
+          </div>
+        </div>
+        <div class="form-group">
+          <label>Your Address / Location</label>
+          <input type="text" name="Address" placeholder="Street, City, State"/>
+        </div>
+        <div class="form-group">
+          <label>Additional Notes</label>
+          <textarea name="Notes" placeholder="Describe your condition, special requirements, or questions..."></textarea>
+        </div>
+        <!-- hidden spam protection -->
+        <input type="text" name="_gotcha" style="display:none"/>
+        <button type="submit" class="submit-btn" id="submit-btn">✅ Confirm Booking Request</button>
+        <div class="success-msg" id="success-msg">
+          🎉 Thank you! Your booking request has been received. Betty will contact you within 24 hours to confirm.
+        </div>
+      </form>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-top">
+    <div>
+      <div class="footer-logo">Med<span>Kit</span> by Betty</div>
+      <div class="footer-tagline">Complete Care, Every Time. ♥</div>
+      <p>Professional home-based medical, dental, and nursing care delivered across Nigeria with compassion and excellence.</p>
+    </div>
+    <div>
+      <h5>Our Services</h5>
+      <ul>
+        <li><a href="#services">Post-Operative Care</a></li>
+        <li><a href="#services">Wound Care & Dressing</a></li>
+        <li><a href="#services">IV Therapy</a></li>
+        <li><a href="#services">Medication Administration</a></li>
+        <li><a href="#services">Home Nursing Care</a></li>
+      </ul>
+    </div>
+    <div>
+      <h5>Contact Us</h5>
+      <ul>
+        <li><a href="tel:08162121821">📱 08162121821</a></li>
+        <li><a href="https://instagram.com/medkit_by_betty">📸 @medkit_by_betty</a></li>
+        <li><a href="mailto:medkitbybetty@gmail.com">✉️ medkitbybetty@gmail.com</a></li>
+        <li><a href="#booking">🚚 Nationwide Delivery</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p>© 2025 MedKit by Betty. All rights reserved. · Medical · Dental · Home Nurse</p>
+    <p>Made with <span class="love">♥</span> — Care · Compassion · Comfort at Home</p>
+  </div>
+</footer>
+
+<script>
+  // Navbar scroll effect
+  window.addEventListener('scroll', () => {
+    document.getElementById('navbar').classList.toggle('scrolled', window.scrollY > 30);
+  });
+
+  // ── WHATSAPP CART ──
+  // Betty's WhatsApp number (Nigerian format)
+  const BETTY_WHATSAPP = '2348162121821';
+
+  function addToCart(item, price) {
+    const msg = encodeURIComponent(
+      `Hello MedKit by Betty! 👋\n\nI'd like to order:\n\n🛒 *${item}*\nPrice: ${price}\n\nPlease confirm availability and delivery details. Thank you!`
+    );
+    const waLink = `https://wa.me/${BETTY_WHATSAPP}?text=${msg}`;
+
+    // Update and show toast
+    const toast = document.getElementById('cart-toast');
+    document.getElementById('toast-product').textContent = item + ' — ' + price;
+    document.getElementById('toast-whatsapp').href = waLink;
+    toast.style.display = 'block';
+
+    // Auto-hide after 6 seconds
+    clearTimeout(window._toastTimer);
+    window._toastTimer = setTimeout(() => toast.style.display = 'none', 6000);
+  }
+
+  // ── FORMSPREE BOOKING FORM ──
+  const form = document.getElementById('booking-form');
+  if (form) {
+    form.addEventListener('submit', async function(e) {
+      e.preventDefault();
+      const btn = document.getElementById('submit-btn');
+      btn.textContent = '⏳ Sending...';
+      btn.disabled = true;
+
+      try {
+        const response = await fetch(form.action, {
+          method: 'POST',
+          body: new FormData(form),
+          headers: { 'Accept': 'application/json' }
+        });
+
+        if (response.ok) {
+          document.getElementById('success-msg').style.display = 'block';
+          btn.textContent = '✅ Request Sent!';
+          form.reset();
+        } else {
+          btn.textContent = '✅ Confirm Booking Request';
+          btn.disabled = false;
+          alert('Something went wrong. Please try again or contact us on WhatsApp.');
+        }
+      } catch (err) {
+        btn.textContent = '✅ Confirm Booking Request';
+        btn.disabled = false;
+        alert('Network error. Please check your connection and try again.');
+      }
+    });
+  }
+
+  // Mobile menu toggle
+  function toggleMenu() {
+    const links = document.querySelector('.nav-links');
+    const cta = document.querySelector('.nav-cta');
+    if (links.style.display === 'flex') {
+      links.style.display = 'none';
+      cta.style.display = 'none';
+    } else {
+      links.style.display = 'flex';
+      links.style.flexDirection = 'column';
+      links.style.position = 'absolute';
+      links.style.top = '70px';
+      links.style.left = '0';
+      links.style.right = '0';
+      links.style.background = '#fff';
+      links.style.padding = '20px 24px';
+      links.style.borderBottom = '1px solid var(--border)';
+      links.style.zIndex = '200';
+    }
+  }
+</script>
+</body>
+</html>
