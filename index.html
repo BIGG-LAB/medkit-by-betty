@@ -728,16 +728,7 @@
       `Hello MedKit by Betty! 👋\n\nI'd like to order:\n\n🛒 *${item}*\nPrice: ${price}\n\nPlease confirm availability and delivery details. Thank you!`
     );
     const waLink = `https://wa.me/${BETTY_WHATSAPP}?text=${msg}`;
-
-    // Update and show toast
-    const toast = document.getElementById('cart-toast');
-    document.getElementById('toast-product').textContent = item + ' — ' + price;
-    document.getElementById('toast-whatsapp').href = waLink;
-    toast.style.display = 'block';
-
-    // Auto-hide after 6 seconds
-    clearTimeout(window._toastTimer);
-    window._toastTimer = setTimeout(() => toast.style.display = 'none', 6000);
+    window.open(waLink, '_blank');
   }
 
   // ── FORMSPREE BOOKING FORM ──
